@@ -19,7 +19,7 @@ public class Player_move : MonoBehaviour
     }
     private void Update()
     {
-        _Onground = Physics.CheckSphere(transform.position, 0.5f, _groundLayer);
+        _Onground = Physics.CheckSphere(_Isground.position, 0.5f, _groundLayer);
 
          Movement();
 
@@ -38,7 +38,7 @@ public class Player_move : MonoBehaviour
     #region Movement&Jump
     void Movement()
     {
-        speed += Time.deltaTime * 1f;
+        speed += Time.deltaTime;
         if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("idle"))
         {
             transform.Translate(speed * Vector3.forward * Time.deltaTime);
@@ -93,13 +93,13 @@ public class Player_move : MonoBehaviour
     }
     void Limits()
     {
-        if (transform.position.x <= 126)
+        if (transform.position.x < 128)
         {
-            transform.position =new Vector3( 126,transform.position.y,transform.position.z);
+            transform.position =new Vector3( 128,transform.position.y,transform.position.z);
         }
-        else if (transform.position.x >= 138)
+        else if (transform.position.x > 140)
         {
-            transform.position = new Vector3(138, transform.position.y, transform.position.z);
+            transform.position = new Vector3(140, transform.position.y, transform.position.z);
         }
     }
     #endregion
