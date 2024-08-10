@@ -9,12 +9,13 @@ public class Player_move : MonoBehaviour
     private Animator _anim;
     private bool _canJump,_Onground;
     private Rigidbody _rb;
-
+    private Collider _col;
 
     private void Start()
     {
         _anim = GetComponent<Animator>();
         _rb= GetComponent<Rigidbody>();
+        _col = GetComponent<Collider>();
     }
     private void Update()
     {
@@ -109,6 +110,7 @@ public class Player_move : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             _anim.SetTrigger("slide");
+           
         }
     }
    public void slide_mobile()
@@ -118,4 +120,5 @@ public class Player_move : MonoBehaviour
 
     }
     #endregion
+
 }
