@@ -1,17 +1,19 @@
+using System;
 using UnityEngine;
 
 public class Player_move : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private float jump_force,_mobileForce;
     [SerializeField] private Transform _Isground;
     [SerializeField] private LayerMask _groundLayer;
+    private bool dead;
     private Animator _anim;
     private bool _canJump,_Onground;
     private Rigidbody _rb;
     private Collider _col;
 
-    private void Start()
+    public void Start()
     {
         _anim = GetComponent<Animator>();
         _rb= GetComponent<Rigidbody>();
@@ -20,9 +22,8 @@ public class Player_move : MonoBehaviour
     private void Update()
     {
         _Onground = Physics.CheckSphere(_Isground.position, 0.5f, _groundLayer);
-
-         Movement();
-
+        Debug.Log(dead);
+        Movement();
         if (Input.GetKey(KeyCode.Space))
         {
             pcJump();
@@ -36,13 +37,17 @@ public class Player_move : MonoBehaviour
 
     }
     #region Movement&Jump
-    void Movement()
+    public void Movement()
     {
-        speed += Time.deltaTime;
-        if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+        if(!dead)
         {
-            transform.Translate(speed * Vector3.forward * Time.deltaTime);
+            speed += Time.deltaTime;
+            if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+            {
+                transform.Translate(speed * Vector3.forward * Time.deltaTime);
+            }
         }
+       
 
     }
 
@@ -120,5 +125,14 @@ public class Player_move : MonoBehaviour
 
     }
     #endregion
-
+    #region collision detection
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "obs")
+        {
+            dead=true;
+            _anim.SetTrigger("death");
+        }
+    }
+    #endregion
 }
