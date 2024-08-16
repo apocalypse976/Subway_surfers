@@ -1,10 +1,12 @@
 using System.Threading;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class gamemanager : MonoBehaviour
 {
-      private float _timer;
+    [HideInInspector] public float _timer;
     [SerializeField] private float _timeduration;
 
     [SerializeField] private TextMeshProUGUI _firstMin;
@@ -12,6 +14,9 @@ public class gamemanager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI separetor;
     [SerializeField] private TextMeshProUGUI _firstSec;
     [SerializeField] private TextMeshProUGUI _secondsec;
+
+    public float coin, winnigs,after_fifty,total_winings;
+    public float coin_miltiplier;
 
     private static gamemanager Singleton;
     public static gamemanager singleton
@@ -24,6 +29,7 @@ public class gamemanager : MonoBehaviour
     private void Start()
     {
         _timer= _timeduration;
+        coin_miltiplier = 0.1f;
     }
     void Awake()
     {
@@ -46,6 +52,8 @@ public class gamemanager : MonoBehaviour
         {
             stopTimer();
         }
+       
+       
     }
     #region Timer
 
@@ -67,6 +75,13 @@ public class gamemanager : MonoBehaviour
             _timer = 0;
             UpdateTimer(_timer); 
         }
+    }
+    #endregion
+
+    #region Buttons
+    public void BacktoHome()
+    {
+        SceneManager.LoadScene(0);
     }
     #endregion
 }

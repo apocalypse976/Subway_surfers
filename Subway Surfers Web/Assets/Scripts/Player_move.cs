@@ -15,6 +15,7 @@ public class Player_move : MonoBehaviour
 
     public void Start()
     {
+        
         _anim = GetComponent<Animator>();
         _rb= GetComponent<Rigidbody>();
         _col = GetComponent<Collider>();
@@ -28,13 +29,20 @@ public class Player_move : MonoBehaviour
         {
             pcJump();
         }
+        ui_Manager.Instance.Update_coin(gamemanager.singleton.coin);
 
         MoveSideWays_PC();
 
         Limits();
 
         slide_pc();
-
+        if (gamemanager.singleton._timer <= 0)
+        {
+            dead = true;
+            _anim.SetTrigger("idle");
+            gamemanager.singleton.total_winings = gamemanager.singleton.after_fifty + gamemanager.singleton.winnigs;
+            ui_Manager.Instance.Game_over(gamemanager.singleton.total_winings);
+        }
     }
     #region Movement&Jump
     public void Movement()
@@ -125,6 +133,7 @@ public class Player_move : MonoBehaviour
 
     }
     #endregion
+
     #region collision detection
     private void OnCollisionEnter(Collision collision)
     {
@@ -132,6 +141,7 @@ public class Player_move : MonoBehaviour
         {
             dead=true;
             _anim.SetTrigger("death");
+            ui_Manager.Instance.Game_over(gamemanager.singleton.winnigs);
         }
     }
     #endregion
