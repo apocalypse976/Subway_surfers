@@ -1,6 +1,4 @@
-using System.Threading;
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +13,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _firstSec;
     [SerializeField] private TextMeshProUGUI _secondsec;
 
-    public float coin, winnigs,after_fifty,total_winings;
+    public float coin, winnigs, after_fifty, total_winings;
     public float coin_miltiplier;
 
     private static gamemanager Singleton;
@@ -28,7 +26,7 @@ public class gamemanager : MonoBehaviour
     }
     private void Start()
     {
-        _timer= _timeduration;
+        _timer = _timeduration;
         coin_miltiplier = 0.1f;
     }
     void Awake()
@@ -36,11 +34,11 @@ public class gamemanager : MonoBehaviour
         if (Singleton == null)
         {
             Singleton = this;
-           
+
         }
     }
 
-   
+
     void Update()
     {
         if (_timer > 0)
@@ -52,28 +50,29 @@ public class gamemanager : MonoBehaviour
         {
             stopTimer();
         }
-       
-       
+
+
     }
     #region Timer
 
     void UpdateTimer(float time)
     {
         float mins = Mathf.FloorToInt(time / 60);
-        float secs= Mathf.FloorToInt(time % 60);
+        float secs = Mathf.FloorToInt(time % 60);
 
-        string format= string.Format("{00:00}{1:00}",mins,secs);
+        string format = string.Format("{00:00}{1:00}", mins, secs);
         _firstMin.text = format[0].ToString();
         _secondMin.text = format[1].ToString();
         _firstSec.text = format[2].ToString();
         _secondsec.text = format[3].ToString();
     }
 
-    void stopTimer() {
+    void stopTimer()
+    {
         if (_timer != 0)
         {
             _timer = 0;
-            UpdateTimer(_timer); 
+            UpdateTimer(_timer);
         }
     }
     #endregion
